@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "344095494469",
+    "project_id": "hotelssearch-1b60b",
+    "storage_bucket": "hotelssearch-1b60b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344095494469:android:2d6e4f82ab8fbd0c52ae2c",
+        "android_client_info": {
+          "package_name": "com.example.hotelsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344095494469-65srk7ejs6vfclio68hf75dgqdsakg3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotelsearch",
+            "certificate_hash": "0dfabd887f78610642fc1a13e7955ff4601cfd38"
+          }
+        },
+        {
+          "client_id": "344095494469-d67pnv0o6kkkfcj1ojt9silfgnt5l9ai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvfg6KcEpagTAh0TQnVXfuahXYDVEKJVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344095494469-d67pnv0o6kkkfcj1ojt9silfgnt5l9ai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

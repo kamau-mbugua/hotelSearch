@@ -1,118 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16sp"
-    android:scrollbarSize="25sp"
-    tools:context=".AddHotelActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageButton
+        android:id="@+id/ivBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ivBack">
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:padding="16sp"
+            android:scrollbarSize="25sp"
+            tools:context=".AddHotelActivity">
 
-            <ImageButton
-                android:id="@+id/ivBack"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="#FFFFFF"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
-            <ImageView
-                android:id="@+id/hotelImage"
-                android:layout_width="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/placeholder"
-                android:layout_height="130dp" />
 
-            <TextView
-                android:id="@+id/textView2"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Picture Hotel Here"
-                android:textColor="@color/black"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/etLocation"
-                android:hint="Location: City/ Town"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/edittextdesign"
-                android:ems="10"
-                android:gravity="center_horizontal|center_vertical"
-                android:inputType="textPersonName"
-                android:textColor="#FF0000"
-                android:textColorHint="#FF0000"/>
 
-            <EditText
-                android:id="@+id/etHotelName"
-                android:hint="Name of Hotel"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/edittextdesign"
-                android:ems="10"
-                android:gravity="center_horizontal|center_vertical"
-                android:inputType="textPersonName"
-                android:textColor="#FF0000"
-                android:textColorHint="#FF0000"/>
 
-            <EditText
-                android:id="@+id/etRating"
-                android:hint="Hotel Rating"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/edittextdesign"
-                android:ems="10"
-                android:gravity="center_horizontal|center_vertical"
-                android:inputType="textPersonName"
-                android:textColor="#FF0000"
-                android:textColorHint="#FF0000"/>
+                <ImageView
+                    android:id="@+id/hotelImage"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/placeholder"
+                    android:layout_height="130dp" />
 
-            <EditText
-                android:id="@+id/etTagList"
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/edittextdesign"
-                android:ems="10"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Tag List"
-                android:inputType="textPersonName"
-                android:textColor="#FF0000"
-                android:textColorHint="#FF0000"/>
+                <TextView
+                    android:id="@+id/tvUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Click Here to Add Picture Hotel Here"
+                    android:textColor="@color/black"
+                    android:background="@color/teal_200"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content"
-                android:background="#24a0ed"
-                android:text="Save Hotel"/>
+                <EditText
+                    android:id="@+id/etLocation"
+                    android:hint="Location: City/ Town"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/etHotelName"
+                    android:hint="Name of Hotel"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
 
-</ScrollView>
+                <EditText
+                    android:id="@+id/etRating"
+                    android:hint="Hotel Rating"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+                <EditText
+                    android:id="@+id/etTagList"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Tag List"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+                <EditText
+                    android:id="@+id/etPrice"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Price Per Hour"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_height="wrap_content"
+                    android:background="#24a0ed"
+                    android:text="Save Hotel"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

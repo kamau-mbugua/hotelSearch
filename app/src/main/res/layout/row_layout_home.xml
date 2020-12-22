@@ -43,7 +43,6 @@
                 android:layout_margin="8dp"
                 android:id="@+id/ratings"
                 android:background="@drawable/rounded_linear_layout"
-
                 android:drawableRight="@drawable/ic_baseline_star_half_24"
                 android:drawableTint="@android:color/white"
                 android:gravity="center"
