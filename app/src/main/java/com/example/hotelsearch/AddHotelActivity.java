@@ -29,8 +29,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -58,6 +61,8 @@ public class AddHotelActivity extends AppCompatActivity {
 
     private StorageTask mUploadTask;
 
+    long maxid =0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,21 @@ public class AddHotelActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference("hotelProducts");
         databaseReference = FirebaseDatabase.getInstance().getReference("hotelProducts");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()){
+                    maxid=(snapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         ivBack= findViewById(R.id.ivBack);
@@ -195,6 +215,7 @@ public class AddHotelActivity extends AppCompatActivity {
     }
 
     private void uploadFile() {
+
         if (image_uri != null) {
             StorageReference fileReference = storageReference.child(System.currentTimeMillis()
                     + "." + getFileExtension(image_uri));
@@ -225,8 +246,8 @@ public class AddHotelActivity extends AppCompatActivity {
                                     etTagList.getText ().toString (),
                                     etPrice.getText ().toString ());
 
-                            String uploadId = databaseReference.push().getKey();
-                            databaseReference.child(uploadId).setValue(upload);
+                            //String uploadId = databaseReference.push().getKey();
+                            databaseReference.child(String.valueOf(maxid+1)).setValue(upload);
 
                             /*uploadProgressBar.setVisibility(View.INVISIBLE);*/
                             openImagesActivity ();
@@ -257,20 +278,4 @@ public class AddHotelActivity extends AppCompatActivity {
     }
 
 
-    /*private  String getPathFromUri(Uri contentUri){
-        String filePath;
-        Cursor cursor = getContentResolver()
-                .query(contentUri,null,null,null,null);
-        if (cursor == null){
-            filePath = contentUri.getPath();
-
-        }
-        else {
-            cursor.moveToFirst();
-            int index  = cursor.getColumnIndex("_data");
-            filePath = cursor.getString(index);
-            cursor.close();
-        }
-        return  filePath;
-    }*/
 }
