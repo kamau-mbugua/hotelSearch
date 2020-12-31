@@ -7,6 +7,8 @@ public class Hotel {
     public  String hotelRating;
     public String hotelListTag;
     public String hotelPricePerHour;
+    private String key;
+    private String ID;
 
 
     public Hotel() {
@@ -23,7 +25,13 @@ public class Hotel {
 
     }
 
+    public String getKey() {
+        return key;
+    }
 
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getHotelLocation() {
         return hotelLocation;
@@ -71,5 +79,13 @@ public class Hotel {
 
     public void setHotelPricePerHour(String hotelPricePerHour) {
         this.hotelPricePerHour = hotelPricePerHour;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

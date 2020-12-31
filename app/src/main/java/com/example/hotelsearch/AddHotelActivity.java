@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.net.UrlQuerySanitizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,8 +27,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,11 +46,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
 
 public class AddHotelActivity extends AppCompatActivity {
 
     ImageView ivBack, hotelImage;
-    EditText etLocation, etHotelName, etRating, etTagList,etPrice;
+    EditText etLocation, etHotelName, etRating, etTagList, etPrice;
     Button btnSave;
     TextView tvUpload;
     Uri image_uri;
@@ -55,13 +60,20 @@ public class AddHotelActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private static final String TAG = "AddHotelActivity";
 
-    private  static  final int REQUEST_CODE_STORAGE_PERMISSION = 1;
-    private  static  final int REQUEST_CODE_SELECT_IMAGE = 2;
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
 
     private StorageTask mUploadTask;
 
-    long maxid =0;
+    long maxid = 0;
+
+    String downloadUrl1;
+   /* String etLocation1 = etLocation.getText().toString();
+    String etHotelName1 = etHotelName.getText().toString();
+    String etRating1 = etRating.getText().toString();
+    String etTagList1 = etTagList.getText().toString();
+    String etPrice1 = etPrice.getText().toString();*/
 
 
     @Override
@@ -72,57 +84,54 @@ public class AddHotelActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("hotelProducts");
         databaseReference = FirebaseDatabase.getInstance().getReference("hotelProducts");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                if (snapshot.exists()){
+//                    maxid=(snapshot.getChildrenCount());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
-                if (snapshot.exists()){
-                    maxid=(snapshot.getChildrenCount());
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        ivBack= findViewById(R.id.ivBack);
+        ivBack = findViewById(R.id.ivBack);
         hotelImage = findViewById(R.id.hotelImage);
         etLocation = findViewById(R.id.etLocation);
-        etHotelName= findViewById(R.id.etHotelName);
+        etHotelName = findViewById(R.id.etHotelName);
         etRating = findViewById(R.id.etRating);
         etTagList = findViewById(R.id.etTagList);
         etPrice = findViewById(R.id.etPrice);
         btnSave = findViewById(R.id.btnSave);
         tvUpload = findViewById(R.id.tvUpload);
 
+
         tvUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                     if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                            Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED
-                    ){
+                            Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         ActivityCompat.requestPermissions(AddHotelActivity.this,
                                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                 REQUEST_CODE_STORAGE_PERMISSION);
-                    }
-
-                    else {
+                    } else {
 
                         selectImage();
 
                     }
 
-                }
-                else {
+                } else {
                     selectImage();
                 }
-
 
 
             }
@@ -132,28 +141,21 @@ public class AddHotelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (etLocation.getText().toString().isEmpty()){
+                if (etLocation.getText().toString().isEmpty()) {
                     etLocation.setError("Location of The hotel is required.");
-                }
-                else if (etHotelName.getText().toString().isEmpty()){
+                } else if (etHotelName.getText().toString().isEmpty()) {
                     etHotelName.setError("Name of The hotel is required.");
-                }
-                else if (etRating.getText().toString().isEmpty()){
+                } else if (etRating.getText().toString().isEmpty()) {
                     etRating.setError("Rating of The hotel is required.");
-                }
-                else if (etTagList.getText().toString().isEmpty()){
+                } else if (etTagList.getText().toString().isEmpty()) {
                     etTagList.setError("Tag List of The hotel is required.");
-                }
-                else if (etPrice.getText().toString().isEmpty()){
+                } else if (etPrice.getText().toString().isEmpty()) {
                     etPrice.setError("Price per Hour of The hotel is required.");
-                }
+                } else {
 
-                else{
-
-                    if (mUploadTask != null && mUploadTask.isInProgress()){
+                    if (mUploadTask != null && mUploadTask.isInProgress()) {
                         Toast.makeText(AddHotelActivity.this, "An Upload is Still in Progress", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         uploadFile();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
@@ -166,8 +168,8 @@ public class AddHotelActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
 
             }
         });
@@ -181,17 +183,15 @@ public class AddHotelActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
 
 
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length >0){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectImage();
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
             }
         }
@@ -213,6 +213,7 @@ public class AddHotelActivity extends AppCompatActivity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
+
 
     private void uploadFile() {
 
@@ -237,27 +238,29 @@ public class AddHotelActivity extends AppCompatActivity {
                                 }
                             }, 500);
 
-                            Toast.makeText(AddHotelActivity.this, "Hotel  Upload successful", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddHotelActivity.this, "Teacher Upload successful", Toast.LENGTH_LONG).show();
                             Hotel upload = new Hotel(etLocation.getText().toString().trim(),
-                                    etHotelName.getText ().toString (),
-                                    taskSnapshot.getUploadSessionUri().toString(),
-                                    /*taskSnapshot.getDownloadUrl().toString(),*/
-                                    etRating.getText ().toString (),
-                                    etTagList.getText ().toString (),
-                                    etPrice.getText ().toString ());
+                                    etHotelName.getText ().toString ().trim(),
+                                   taskSnapshot.getUploadSessionUri().toString(),
+                                   // taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),
+                                   // taskSnapshot.getDownloadUrl().toString(),
+                                    etRating.getText ().toString ().trim(),
+                                    etTagList.getText ().toString ().trim(),
+                                    etPrice.getText ().toString ().trim());
 
-                            //String uploadId = databaseReference.push().getKey();
-                            databaseReference.child(String.valueOf(maxid+1)).setValue(upload);
 
-                            /*uploadProgressBar.setVisibility(View.INVISIBLE);*/
-                            openImagesActivity ();
+                            String uploadId = databaseReference.push().getKey();
+                            databaseReference.child(uploadId).setValue(upload);
+
+                            /* uploadProgressBar.setVisibility(View.INVISIBLE);*/
+                         //   openImagesActivity();
 
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            /*uploadProgressBar.setVisibility(View.INVISIBLE);*/
+                          /*  uploadProgressBar.setVisibility(View.INVISIBLE);*/
                             Toast.makeText(AddHotelActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -268,14 +271,13 @@ public class AddHotelActivity extends AppCompatActivity {
                            /* uploadProgressBar.setProgress((int) progress);*/
                         }
                     });
-        } else {
-            Toast.makeText(this, "You haven't Selected Any file selected", Toast.LENGTH_SHORT).show();
         }
+
+
     }
-    private void openImagesActivity(){
+
+    /*private void openImagesActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-
+    }*/
 }

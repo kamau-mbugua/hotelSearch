@@ -1,81 +1,78 @@
 package com.example.hotelsearch;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
-
-public  class RecyclerAdapter{}
-
-/*public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder>{
+public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder>{
     private Context mContext;
-    private List<Hotel> hotel;
-    private RecyclerView.OnItemClickListener mListener;
+    private List<Hotel> hotels;
+    private OnItemClickListener mListener;
 
-    public RecyclerView(Context context, List<Hotel> uploads) {
+    public RecyclerAdapter(Context context, List<Hotel> uploads) {
         mContext = context;
-        hotel = uploads;
+        hotels = uploads;
     }
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.row_layout_home, parent, false);
-        return new RecyclerView.RecyclerViewHolder(v);
+        return new RecyclerViewHolder(v);
     }
 
-
     @Override
-    public void onBindViewHolder(RecyclerView.RecyclerViewHolder holder, int position) {
-        Hotel currentTeacher = hotel.get(position);
-        holder.tvRatings.setText(currentTeacher.getHotelRating());
-        holder.tvLocation.setText(currentTeacher.getHotelLocation());
-        holder.tvhotelName.setText(currentTeacher.getHotelName());
-        holder.tvtagsList.setText(currentTeacher.getHotelListTag());
+    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+        Hotel currentHotel = hotels.get(position);
+        holder.ratings.setText(currentHotel.getHotelRating());
+        holder.hotelLocation.setText(currentHotel.getHotelLocation());
+        holder.hotelName.setText(currentHotel.getHotelName());
+        holder.tagsList.setText(currentHotel.getHotelListTag());
         Picasso.with(mContext)
-                .load(currentTeacher.getImageUri())
+                .load(currentHotel.getImageUri())
                 .placeholder(R.drawable.placeholder)
                 .fit()
                 .centerCrop()
-                .into(holder.ivhotelImage);
+                .into(holder.hotelImage);
     }
 
     @Override
     public int getItemCount() {
-        return hotel.size();
+        return hotels.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
-        TextView tvRatings, tvLocation, tvhotelName, tvtagsList;
-        ImageView  ivhotelImage;
+        public TextView ratings,hotelLocation,hotelName,tagsList;
+        public ImageView hotelImage;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-
-            *//*nameTextView*//*
-            tvRatings = itemView.findViewById(R.id.ratings);
-
-            *//*descriptionTextView*//*
-            tvLocation = itemView.findViewById(R.id.hotelCardView);
-
-            *//*dateTextView*//*
-            tvhotelName = itemView.findViewById(R.id.hotelName);
-
-            *//*teacherImageView*//*
-            tvtagsList = itemView.findViewById(R.id.tagsList);
-            ivhotelImage = itemView.findViewById(R.id.hotelImage);
-
+            ratings =itemView.findViewById ( R.id.ratings );
+            hotelLocation = itemView.findViewById(R.id.hotelLocation);
+            hotelLocation = itemView.findViewById(R.id.hotelLocation);
+            hotelName = itemView.findViewById(R.id.hotelName);
+            tagsList = itemView.findViewById(R.id.tagsList);
+            hotelImage = itemView.findViewById(R.id.hotelImage);
 
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
@@ -90,12 +87,45 @@ public  class RecyclerAdapter{}
                 }
             }
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Select Action");
+            MenuItem showItem = menu.add( Menu.NONE, 1, 1, "Show");
+            MenuItem deleteItem = menu.add(Menu.NONE, 2, 2, "Delete");
+
+            showItem.setOnMenuItemClickListener(this);
+            deleteItem.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+
+                    switch (item.getItemId()) {
+                        case 1:
+                            mListener.onShowItemClick(position);
+                            return true;
+                        case 2:
+                            mListener.onDeleteItemClick(position);
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
         void onShowItemClick(int position);
         void onDeleteItemClick(int position);
     }
-}*/
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
+}

@@ -60,26 +60,28 @@
             android:padding="12dp">
 
             <TextView
-                android:layout_width="39dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/hotelCardView"
+                android:id="@+id/hotelLocation"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/hotelBookButton"
                 android:gravity="center"
-                android:text="Location" />
+                android:text="Hotel Location" />
 
             <TextView
                 android:id="@+id/hotelName"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
+                android:text="Hotel Name"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal" />
             <TextView
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="12dp"
                 android:id="@+id/tagsList"
+                android:text="Hotel Tag List"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/hotelName"/>
 

@@ -15,10 +15,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <!--<ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="fill_parent"
+            android:id="@+id/listView"
+            android:layout_margin="10dp"/>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerVw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
