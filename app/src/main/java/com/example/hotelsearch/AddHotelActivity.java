@@ -24,6 +24,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,10 +66,13 @@ public class AddHotelActivity extends AppCompatActivity {
 
 
     private StorageTask mUploadTask;
+    private ProgressBar mProgress;
+    
+    Hotel hotel;
 
     long maxid = 0;
 
-    String downloadUrl1;
+    String hotelLocation, hotelName, hotelRating, hotelTagList;
    /* String etLocation1 = etLocation.getText().toString();
     String etHotelName1 = etHotelName.getText().toString();
     String etRating1 = etRating.getText().toString();
@@ -109,6 +113,9 @@ public class AddHotelActivity extends AppCompatActivity {
         etPrice = findViewById(R.id.etPrice);
         btnSave = findViewById(R.id.btnSave);
         tvUpload = findViewById(R.id.tvUpload);
+        mProgress = findViewById(R.id.progressBar);
+        
+        hotel = new Hotel();
 
 
         tvUpload.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +230,66 @@ public class AddHotelActivity extends AppCompatActivity {
 
             /*uploadProgressBar.setVisibility(View.VISIBLE);
             uploadProgressBar.setIndeterminate(true);*/
+            
+            UploadTask uploadTask = fileReference.putFile(image_uri);
+            Toast.makeText(this, "UP " + uploadTask, Toast.LENGTH_SHORT).show();
+
+            // Register observers to listen for when the download is done or if it fails
+            
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddHotelActivity.this, "Fail...", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(AddHotelActivity.this, "Success...", Toast.LENGTH_LONG).show();
+
+                    if (taskSnapshot.getMetadata() != null)
+                        if (taskSnapshot.getMetadata().getReference() != null) {
+                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Toast.makeText(AddHotelActivity.this, "Proceed...", Toast.LENGTH_LONG).show();
+                                    String sImage = uri.toString();
+
+                                    mProgress.setVisibility(View.VISIBLE);
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mProgress.setProgress(0);
+                                        }
+                                    }, 500);
+                                    Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
+
+                                    hotel = new Hotel(hotelLocation, hotelName, hotelRating, hotelTagList, sImage);
+                                    String key = databaseReference.push().getKey();
+                                    hotel.setID(key);
+                                    databaseReference.child(key).setValue(hotel);
+
+                                    Toast.makeText(AddHotelActivity.this, "Success Key retention...", Toast.LENGTH_LONG).show();
+                                   /* mProgress.setVisibility(View.INVISIBLE);
+                                    backToProfile(nameWork, phoneWork,locationWork, emailWork, sImage, spec);
+                                    name.setText("");
+                                    location.setText("");
+                                    phone.setText("");
+                                    email.setText("");
+                                    Picasso.get().load("null").placeholder(R.drawable.ic_image_black_24dp).into(workImage);
+                                */}
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    mProgress.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(WorkerProfile.this, "Database Fail...", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                }
+            })
 
             mUploadTask = fileReference.putFile(image_uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
