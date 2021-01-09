@@ -69,12 +69,12 @@ public class AddHotelActivity extends AppCompatActivity {
 
     private StorageTask mUploadTask;
     private ProgressBar mProgress;
-    
+
     Hotel hotel;
 
     long maxid = 0;
 
-    String hotelLocation, hotelName, hotelRating,hotelPricePerHour,email,phone,mapUrl,webUrl, hotelTagList;
+    String mhotelLocation, mhotelName, mhotelRating,mhotelPricePerHour,email,phone,mapUrl,webUrl, mhotelTagList;
    /* String etLocation1 = etLocation.getText().toString();
     String etHotelName1 = etHotelName.getText().toString();
     String etRating1 = etRating.getText().toString();
@@ -116,7 +116,7 @@ public class AddHotelActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         tvUpload = findViewById(R.id.tvUpload);
         mProgress = findViewById(R.id.progressBar);
-        
+
         hotel = new Hotel();
 
 
@@ -185,17 +185,98 @@ public class AddHotelActivity extends AppCompatActivity {
         });
     }
 
+    private void uploadFile() {
+
+        if (image_uri != null) {
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+                    + "." + getFileExtension(image_uri));
+
+            /*uploadProgressBar.setVisibility(View.VISIBLE);
+            uploadProgressBar.setIndeterminate(true);*/
+
+            UploadTask uploadTask = fileReference.putFile(image_uri);
+            Toast.makeText(this, "UP " + uploadTask, Toast.LENGTH_SHORT).show();
+
+            // Register observers to listen for when the download is done or if it fails
+
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddHotelActivity.this, "Fail...", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(AddHotelActivity.this, "Success...", Toast.LENGTH_LONG).show();
+
+                    if (taskSnapshot.getMetadata() != null)
+                        if (taskSnapshot.getMetadata().getReference() != null) {
+                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Toast.makeText(AddHotelActivity.this, "Proceed...", Toast.LENGTH_LONG).show();
+                                    String sImage = uri.toString();
+
+                                    mProgress.setVisibility(View.VISIBLE);
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mProgress.setProgress(0);
+                                        }
+                                    }, 500);
+                                    Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
+
+                                    hotel = new Hotel(mhotelLocation, mhotelName, mhotelRating, mhotelTagList, mhotelPricePerHour, sImage);
+                                    String key = databaseReference.push().getKey();
+                                    hotel.setID(key);
+                                    databaseReference.child(key).setValue(hotel);
+
+                                    Toast.makeText(AddHotelActivity.this, "Success Key retention...", Toast.LENGTH_LONG).show();
+                                    mProgress.setVisibility(View.INVISIBLE);
+                                    backToProfile(mhotelLocation, mhotelName, mhotelRating, mhotelTagList, mhotelPricePerHour, sImage);
+                                    etHotelName.setText("");
+                                    etLocation.setText("");
+                                    etPrice.setText("");
+                                    etTagList.setText("");
+                                    Picasso.get().load("null").placeholder(R.drawable.placeholder).into(hotelImage);
+                                }
+                            });
+                            result.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    mProgress.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(AddHotelActivity.this, "Database Fail...", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                }
+            });
+
+
+        }
+
+
+    }
+
+    private void backToProfile(String mhotelLocation, String mhotelName, String mhotelRating, String mhotelTagList, String mhotelPricePerHour, String sImage) {
+
+    }
+
+
     private void receiveEntries() {
 
-        hotelLocation = etLocation.getText().toString().trim();
-        hotelName = etHotelName.getText().toString().trim();
-        hotelRating= etRating.getText().toString().trim();
-        hotelPricePerHour= etPrice.getText().toString().trim();
+        mhotelLocation = etLocation.getText().toString().trim();
+        mhotelName = etHotelName.getText().toString().trim();
+        mhotelRating= etRating.getText().toString().trim();
+        mhotelPricePerHour= etPrice.getText().toString().trim();
        /* email= .getText().toString().trim();
         phone= .getText().toString().trim();
         mapUrl= .getText().toString().trim();
         webUrl= .getText().toString().trim();*/
-        hotelTagList=etTagList.getText().toString().trim();
+        mhotelTagList=etTagList.getText().toString().trim();
 
         checkFields();
     }
@@ -283,128 +364,7 @@ public class AddHotelActivity extends AppCompatActivity {
     }
 
 
-    private void uploadFile() {
 
-        if (image_uri != null) {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis()
-                    + "." + getFileExtension(image_uri));
-
-            /*uploadProgressBar.setVisibility(View.VISIBLE);
-            uploadProgressBar.setIndeterminate(true);*/
-            
-            UploadTask uploadTask = fileReference.putFile(image_uri);
-            Toast.makeText(this, "UP " + uploadTask, Toast.LENGTH_SHORT).show();
-
-            // Register observers to listen for when the download is done or if it fails
-            
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddHotelActivity.this, "Fail...", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(AddHotelActivity.this, "Success...", Toast.LENGTH_LONG).show();
-
-                    if (taskSnapshot.getMetadata() != null)
-                        if (taskSnapshot.getMetadata().getReference() != null) {
-                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
-                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Toast.makeText(AddHotelActivity.this, "Proceed...", Toast.LENGTH_LONG).show();
-                                    String sImage = uri.toString();
-
-                                    mProgress.setVisibility(View.VISIBLE);
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            mProgress.setProgress(0);
-                                        }
-                                    }, 500);
-                                    Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
-
-                                    hotel = new Hotel(hotelLocation, hotelName, hotelRating, hotelTagList, hotelPricePerHour, sImage);
-                                    String key = databaseReference.push().getKey();
-                                    hotel.setID(key);
-                                    databaseReference.child(key).setValue(hotel);
-
-                                    Toast.makeText(AddHotelActivity.this, "Success Key retention...", Toast.LENGTH_LONG).show();
-                                   /* mProgress.setVisibility(View.INVISIBLE);
-                                    backToProfile(nameWork, phoneWork,locationWork, emailWork, sImage, spec);
-                                    name.setText("");
-                                    location.setText("");
-                                    phone.setText("");
-                                    email.setText("");
-                                    Picasso.get().load("null").placeholder(R.drawable.ic_image_black_24dp).into(workImage);
-                                */
-                                }
-                            });
-                            result.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    mProgress.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(AddHotelActivity.this, "Database Fail...", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
-                }
-            });
-
-            /*mUploadTask = fileReference.putFile(image_uri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    *//*uploadProgressBar.setVisibility(View.VISIBLE);
-                                    uploadProgressBar.setIndeterminate(false);
-                                    uploadProgressBar.setProgress(0);*//*
-                                }
-                            }, 500);
-
-                            Toast.makeText(AddHotelActivity.this, "Teacher Upload successful", Toast.LENGTH_LONG).show();
-                            Hotel upload = new Hotel(etLocation.getText().toString().trim(),
-                                    etHotelName.getText ().toString ().trim(),
-                                   taskSnapshot.getUploadSessionUri().toString(),
-                                   // taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),
-                                   // taskSnapshot.getDownloadUrl().toString(),
-                                    etRating.getText ().toString ().trim(),
-                                    etTagList.getText ().toString ().trim(),
-                                    etPrice.getText ().toString ().trim());
-
-
-                            String uploadId = databaseReference.push().getKey();
-                            databaseReference.child(uploadId).setValue(upload);
-
-                            *//* uploadProgressBar.setVisibility(View.INVISIBLE);*//*
-                         //   openImagesActivity();
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                          *//*  uploadProgressBar.setVisibility(View.INVISIBLE);*//*
-                            Toast.makeText(AddHotelActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                           *//* uploadProgressBar.setProgress((int) progress);*//*
-                        }
-                    });*/
-        }
-
-
-    }
 
     /*private void openImagesActivity() {
         Intent intent = new Intent(this, MainActivity.class);

@@ -14,7 +14,13 @@ public class Hotel {
     private String mapUrl;
     private String websiteUrl;
 
-    public Hotel() {
+    public Hotel(String mhotelLocation, String mhotelName, String mhotelRating, String mhotelTagList, String mhotelPricePerHour, String sImage) {
+        this.hotelLocation = mhotelLocation;
+        this.hotelName = mhotelName;
+        this.imageUri = sImage;
+        this.hotelRating = mhotelRating;
+        this.hotelListTag = mhotelTagList;
+        this.hotelPricePerHour = mhotelPricePerHour;
     }
 
     public Hotel(String hotelLocation, String hotelName, String imageUri, String hotelRating, String hotelListTag, String hotelPricePerHour, String key, String ID, String email, String phone, String mapUrl, String websiteUrl) {
@@ -32,8 +38,14 @@ public class Hotel {
         this.websiteUrl = websiteUrl;
     }
 
-/*
-    public Hotel(String hotelLocation, String hotelName, String hotelRating, String hotelTagList, String hotelPricePerHour, String email, String phone, String mapUrl, String webUrl, String sImage) {
+    public Hotel() {
+
+    }
+
+
+
+
+   /* public Hotel(String hotelLocation, String hotelName, String hotelRating, String hotelTagList, String hotelPricePerHour, String email, String phone, String mapUrl, String webUrl, String sImage) {
         this.hotelLocation = hotelLocation;
         this.hotelName = hotelName;
         this.imageUri = sImage;
@@ -44,8 +56,7 @@ public class Hotel {
         this.phone = phone;
         this.mapUrl = mapUrl;
         this.websiteUrl = webUrl;
-    }
-*/
+    }*/
 
     public String getHotelLocation() {
         return hotelLocation;

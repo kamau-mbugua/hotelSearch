@@ -184,7 +184,7 @@ public class HotelListActivity extends AppCompatActivity {
                     String uid = snapshot.getKey();
                     String hotelLocation = snapshot.child("hotelLocation").getValue(String.class);
                     String hotelName = snapshot.child("hotelName").getValue(String.class);
-                    String tagList = snapshot.child("tagList").getValue(String.class);
+                    String tagList = snapshot.child("hotelListTag").getValue(String.class);
 
 //                    Products filteredProduct = snapshot.getValue(Products.class);
                     Hotel modelFiltered = snapshot.getValue(Hotel.class);

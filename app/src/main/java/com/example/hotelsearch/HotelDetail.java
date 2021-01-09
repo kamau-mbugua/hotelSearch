@@ -1,9 +1,17 @@
 package com.example.hotelsearch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +20,8 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 public class HotelDetail extends AppCompatActivity {
+
+    private static final int CALL_PERMISSION = 30;
 
     ImageView hotelImage;
     TextView ratings,tvHotelEmail,tvHotelPhone,hotelLocation,
@@ -40,6 +50,21 @@ public class HotelDetail extends AppCompatActivity {
         setContentView(R.layout.activity_hotel_detail);
         initializeWidgets();
         recieveIntents();
+        tvHotelEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mailing();
+
+            }
+        });
+
+        tvHotelPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                phoning();
+
+            }
+        });
 
         //RECEIVE DATA FROM ITEMSACTIVITY VIA INTENT
        /* Intent i=this.getIntent();
@@ -64,16 +89,56 @@ public class HotelDetail extends AppCompatActivity {
 
     }
 
-    private void recieveIntents() {
-        if (getIntent().hasExtra("name") && getIntent().hasExtra("location") && getIntent().hasExtra("mail")
-                && getIntent().hasExtra("image") && getIntent().hasExtra("phone") && getIntent().hasExtra("speciality")) {
+    private void phoning() {
+        if (Build.VERSION.SDK_INT >= 23){
+            if (checkedPermission()){
+//                Permission Already Granted
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+                phoneIntent.setData(Uri.parse("tel:" + mtvHotelPhone));
+                startActivity(phoneIntent);
+            }
+            else {
+                requestPermission();
+            }
+        }
+        if (checkedPermission()){
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+            phoneIntent.setData(Uri.parse("tel:" + mtvHotelPhone));
+            startActivity(phoneIntent);
+        }
+    }
 
-            mhotelLocation = getIntent().getStringExtra("name");
-            mhotelNames = getIntent().getStringExtra("location");
-            mtvHotelEmail = getIntent().getStringExtra("mail");
-            mhotelImage = getIntent().getStringExtra("image");
-            mtvHotelPhone = getIntent().getStringExtra("phone");
-            mratings = getIntent().getStringExtra("speciality");
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(HotelDetail.this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
+    }
+
+    private boolean checkedPermission() {
+        int callPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE);
+
+        return callPermission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void mailing() {
+        Intent mailIntent = new Intent(Intent.ACTION_SEND);
+        mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {mtvHotelEmail});
+        mailIntent.putExtra(Intent.EXTRA_SUBJECT, "REQUESTING FOR MECHANIC ASSISTANCE");
+        mailIntent.setType("message/rfc822");
+        startActivity(Intent.createChooser(mailIntent, "Choose Mail Client"));
+    }
+
+
+
+    private void recieveIntents() {
+        if (getIntent().hasExtra("hotelName") && getIntent().hasExtra("hotelLocation") /*&& getIntent().hasExtra("mail")*/
+                && getIntent().hasExtra("imageUri") /*&& getIntent().hasExtra("phone")*/ && getIntent().hasExtra("hotelRating")&& getIntent().hasExtra("hotelListTag")) {
+
+            mhotelLocation = getIntent().getStringExtra("hotelLocation");
+            mhotelNames = getIntent().getStringExtra("hotelName");
+            //mtvHotelEmail = getIntent().getStringExtra("mail");
+            mhotelImage = getIntent().getStringExtra("imageUri");
+           // mtvHotelPhone = getIntent().getStringExtra("phone");
+            mtagsList = getIntent().getStringExtra("hotelListTag");
+            mratings = getIntent().getStringExtra("hotelRating");
 
             provision(mratings,mtvHotelEmail,mtvHotelPhone,mhotelLocation,
                     mhotelNames,mtagsList, mhotelImage);
@@ -82,9 +147,9 @@ public class HotelDetail extends AppCompatActivity {
 
     private void provision(String mratings, String mtvHotelEmail, String mtvHotelPhone, String mhotelLocation, String mhotelNames, String mtagsList, String mhotelImage) {
         ratings.setText(mratings);
-        tvHotelEmail.setText(mtvHotelEmail);
-        tvHotelPhone.setText(mtvHotelPhone);
-        hotelLocation.setText(mtvHotelPhone);
+        //tvHotelEmail.setText(mtvHotelEmail);
+        //tvHotelPhone.setText(mtvHotelPhone);
+        hotelLocation.setText(mhotelLocation);
         hotelNames.setText(mhotelNames);
         tagsList.setText(mtagsList);
         //hotelLocation.setText(hotelLocation);
@@ -94,5 +159,19 @@ public class HotelDetail extends AppCompatActivity {
 
         Toast.makeText(this, "Url : " + mhotelImage, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CALL_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission For Calling has been Accepted...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission For Calling has been Denied...", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
     }
 }

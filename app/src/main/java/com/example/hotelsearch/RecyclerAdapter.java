@@ -68,11 +68,11 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
             @Override
             public void onClick(View v) {
                 Intent passIntent = new Intent(mContext, HotelDetail.class);
-                passIntent.putExtra("location", currentHotel.getHotelLocation());
-                passIntent.putExtra("name", currentHotel.getHotelName());
-                passIntent.putExtra("ratings", currentHotel.getHotelRating());
-                passIntent.putExtra("tagList", currentHotel.getHotelListTag());
-                passIntent.putExtra("image", currentHotel.getImageUri());
+                passIntent.putExtra("hotelLocation", currentHotel.getHotelLocation());
+                passIntent.putExtra("hotelName", currentHotel.getHotelName());
+                passIntent.putExtra("hotelRating", currentHotel.getHotelRating());
+                passIntent.putExtra("hotelListTag", currentHotel.getHotelListTag());
+                passIntent.putExtra("imageUri", currentHotel.getImageUri());
 
 
                 mContext.startActivity(passIntent);
