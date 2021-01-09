@@ -8,11 +8,13 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.UrlQuerySanitizer;
 import android.os.Build;
@@ -72,7 +74,7 @@ public class AddHotelActivity extends AppCompatActivity {
 
     long maxid = 0;
 
-    String hotelLocation, hotelName, hotelRating, hotelTagList;
+    String hotelLocation, hotelName, hotelRating,hotelPricePerHour,email,phone,mapUrl,webUrl, hotelTagList;
    /* String etLocation1 = etLocation.getText().toString();
     String etHotelName1 = etHotelName.getText().toString();
     String etRating1 = etRating.getText().toString();
@@ -147,8 +149,9 @@ public class AddHotelActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                receiveEntries();
 
-                if (etLocation.getText().toString().isEmpty()) {
+                /*if (etLocation.getText().toString().isEmpty()) {
                     etLocation.setError("Location of The hotel is required.");
                 } else if (etHotelName.getText().toString().isEmpty()) {
                     etHotelName.setError("Name of The hotel is required.");
@@ -167,7 +170,7 @@ public class AddHotelActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     }
-                }
+                }*/
 
             }
         });
@@ -180,6 +183,64 @@ public class AddHotelActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void receiveEntries() {
+
+        hotelLocation = etLocation.getText().toString().trim();
+        hotelName = etHotelName.getText().toString().trim();
+        hotelRating= etRating.getText().toString().trim();
+        hotelPricePerHour= etPrice.getText().toString().trim();
+       /* email= .getText().toString().trim();
+        phone= .getText().toString().trim();
+        mapUrl= .getText().toString().trim();
+        webUrl= .getText().toString().trim();*/
+        hotelTagList=etTagList.getText().toString().trim();
+
+        checkFields();
+    }
+
+    private void checkFields() {
+
+        if (etLocation.getText().toString().isEmpty()) {
+                    etLocation.setError("Location of The hotel is required.");
+                } else if (etHotelName.getText().toString().isEmpty()) {
+                    etHotelName.setError("Name of The hotel is required.");
+                } else if (etRating.getText().toString().isEmpty()) {
+                    etRating.setError("Rating of The hotel is required.");
+                } else if (etTagList.getText().toString().isEmpty()) {
+                    etTagList.setError("Tag List of The hotel is required.");
+                } else if (etPrice.getText().toString().isEmpty()) {
+                    etPrice.setError("Price per Hour of The hotel is required.");
+                } else {
+
+                    if (mUploadTask != null && mUploadTask.isInProgress()) {
+                        Toast.makeText(AddHotelActivity.this, "An Upload is Still in Progress", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        if (isNetworkConnected()) {
+                            uploadFile();
+
+
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+                        else {
+
+                            Toast.makeText(AddHotelActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                }
+
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+
     }
 
     private void selectImage() {
@@ -265,7 +326,7 @@ public class AddHotelActivity extends AppCompatActivity {
                                     }, 500);
                                     Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
 
-                                    hotel = new Hotel(hotelLocation, hotelName, hotelRating, hotelTagList, sImage);
+                                    hotel = new Hotel(hotelLocation, hotelName, hotelRating, hotelTagList, hotelPricePerHour, sImage);
                                     String key = databaseReference.push().getKey();
                                     hotel.setID(key);
                                     databaseReference.child(key).setValue(hotel);
@@ -278,20 +339,22 @@ public class AddHotelActivity extends AppCompatActivity {
                                     phone.setText("");
                                     email.setText("");
                                     Picasso.get().load("null").placeholder(R.drawable.ic_image_black_24dp).into(workImage);
-                                */}
-                            }).addOnFailureListener(new OnFailureListener() {
+                                */
+                                }
+                            });
+                            result.addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     mProgress.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(WorkerProfile.this, "Database Fail...", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddHotelActivity.this, "Database Fail...", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
                         }
                 }
-            })
+            });
 
-            mUploadTask = fileReference.putFile(image_uri)
+            /*mUploadTask = fileReference.putFile(image_uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -299,9 +362,9 @@ public class AddHotelActivity extends AppCompatActivity {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    /*uploadProgressBar.setVisibility(View.VISIBLE);
+                                    *//*uploadProgressBar.setVisibility(View.VISIBLE);
                                     uploadProgressBar.setIndeterminate(false);
-                                    uploadProgressBar.setProgress(0);*/
+                                    uploadProgressBar.setProgress(0);*//*
                                 }
                             }, 500);
 
@@ -319,7 +382,7 @@ public class AddHotelActivity extends AppCompatActivity {
                             String uploadId = databaseReference.push().getKey();
                             databaseReference.child(uploadId).setValue(upload);
 
-                            /* uploadProgressBar.setVisibility(View.INVISIBLE);*/
+                            *//* uploadProgressBar.setVisibility(View.INVISIBLE);*//*
                          //   openImagesActivity();
 
                         }
@@ -327,7 +390,7 @@ public class AddHotelActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                          /*  uploadProgressBar.setVisibility(View.INVISIBLE);*/
+                          *//*  uploadProgressBar.setVisibility(View.INVISIBLE);*//*
                             Toast.makeText(AddHotelActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -335,9 +398,9 @@ public class AddHotelActivity extends AppCompatActivity {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                           /* uploadProgressBar.setProgress((int) progress);*/
+                           *//* uploadProgressBar.setProgress((int) progress);*//*
                         }
-                    });
+                    });*/
         }
 
 

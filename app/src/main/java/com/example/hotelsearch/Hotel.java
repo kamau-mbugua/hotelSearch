@@ -32,6 +32,21 @@ public class Hotel {
         this.websiteUrl = websiteUrl;
     }
 
+/*
+    public Hotel(String hotelLocation, String hotelName, String hotelRating, String hotelTagList, String hotelPricePerHour, String email, String phone, String mapUrl, String webUrl, String sImage) {
+        this.hotelLocation = hotelLocation;
+        this.hotelName = hotelName;
+        this.imageUri = sImage;
+        this.hotelRating = hotelRating;
+        this.hotelListTag = hotelTagList;
+        this.hotelPricePerHour = hotelPricePerHour;
+        this.email = email;
+        this.phone = phone;
+        this.mapUrl = mapUrl;
+        this.websiteUrl = webUrl;
+    }
+*/
+
     public String getHotelLocation() {
         return hotelLocation;
     }
