@@ -29,7 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HotelListActivity extends AppCompatActivity implements RecyclerAdapter.OnItemClickListener{
+public class HotelListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerAdapter mAdapter;
