@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,8 +13,10 @@ import com.squareup.picasso.Picasso;
 public class HotelDetail extends AppCompatActivity {
 
     ImageView hotelImage;
-    TextView ratings,tvHotelEmail,tvHotelPhone,tvHotelDirection,hotelLocation,
+    TextView ratings,tvHotelEmail,tvHotelPhone,hotelLocation,
     hotelNames,tagsList;
+    WebView tvHotelDirection;
+
 
 
     private void initializeWidgets(){
@@ -21,7 +24,7 @@ public class HotelDetail extends AppCompatActivity {
         ratings = findViewById(R.id.ratings);
         tvHotelEmail = findViewById(R.id.tvHotelEmail);
         tvHotelPhone = findViewById(R.id.tvHotelPhone);
-        tvHotelDirection = findViewById(R.id.tvHotelDirection);
+        tvHotelDirection = findViewById(R.id.googleMapView);
         hotelLocation = findViewById(R.id.hotelLocation);
         hotelNames = findViewById(R.id.hotelName);
         tagsList = findViewById(R.id.tagsList);
@@ -47,7 +50,7 @@ public class HotelDetail extends AppCompatActivity {
         hotelLocation.setText(hotelName);
         ratings.setText(taglist);
         tagsList.setText(rating);
-        Picasso.with(this)
+        Picasso.get()
                 .load(imageURL)
                 .placeholder(R.drawable.placeholder)
                 .fit()

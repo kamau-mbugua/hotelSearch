@@ -204,7 +204,7 @@ public class AddHotelActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             image_uri = data.getData();
 
-            Picasso.with(this).load(image_uri).into(hotelImage);
+            Picasso.get().load(image_uri).into(hotelImage);
         }
     }
 
