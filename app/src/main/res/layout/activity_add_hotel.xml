@@ -100,7 +100,7 @@
                     android:background="@drawable/edittextdesign"
                     android:ems="10"
                     android:gravity="center_horizontal|center_vertical"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:textColor="#FF0000"
                     android:textColorHint="#FF0000"/>
 
@@ -126,7 +126,64 @@
                     android:ems="10"
                     android:layout_marginTop="10dp"
                     android:gravity="center_horizontal|center_vertical"
-                    android:hint="Price Per Hour"
+                    android:hint="Price per Day"
+                    android:inputType="number"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+                <EditText
+                    android:id="@+id/etphone"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Hotel Email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+                <EditText
+                    android:id="@+id/etweb"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Hotel Website"
+                    android:inputType="textPersonName"
+                    android:textColor="#FF0000"
+                    android:textColorHint="#FF0000"/>
+
+
+                <EditText
+                    android:id="@+id/etmapUrl"
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextdesign"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:hint="Google Map Url"
                     android:inputType="textPersonName"
                     android:textColor="#FF0000"
                     android:textColorHint="#FF0000"/>

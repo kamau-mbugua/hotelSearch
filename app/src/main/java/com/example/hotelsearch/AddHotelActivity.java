@@ -55,7 +55,7 @@ import java.util.HashMap;
 public class AddHotelActivity extends AppCompatActivity {
 
     ImageView ivBack, hotelImage;
-    EditText etLocation, etHotelName, etRating, etTagList, etPrice;
+    EditText etLocation, etHotelName, etRating, etTagList, etPrice, etPhone,etWeb,etMapUrl,etEmail;
     Button btnSave;
     TextView tvUpload;
     Uri image_uri;
@@ -106,6 +106,7 @@ public class AddHotelActivity extends AppCompatActivity {
 //        });
 
 
+        etEmail = findViewById(R.id.etEmail);
         ivBack = findViewById(R.id.ivBack);
         hotelImage = findViewById(R.id.hotelImage);
         etLocation = findViewById(R.id.etLocation);
@@ -116,6 +117,9 @@ public class AddHotelActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         tvUpload = findViewById(R.id.tvUpload);
         mProgress = findViewById(R.id.progressBar);
+        etPhone = findViewById(R.id.etphone);
+        etWeb = findViewById(R.id.etweb);
+        etMapUrl = findViewById(R.id.etmapUrl);
 
         hotel = new Hotel();
 
@@ -228,7 +232,7 @@ public class AddHotelActivity extends AppCompatActivity {
                                     }, 500);
                                     Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
 
-                                    hotel = new Hotel(mhotelLocation, mhotelName, mhotelRating, mhotelTagList, mhotelPricePerHour, sImage);
+                                    hotel = new Hotel(mhotelLocation, mhotelName, mhotelRating,mhotelPricePerHour,email,phone,mapUrl,webUrl, mhotelTagList, sImage);
                                     String key = databaseReference.push().getKey();
                                     hotel.setID(key);
                                     databaseReference.child(key).setValue(hotel);
@@ -257,6 +261,9 @@ public class AddHotelActivity extends AppCompatActivity {
 
 
         }
+        else {
+            Toast.makeText(this, "Image Url Missing", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -272,10 +279,10 @@ public class AddHotelActivity extends AppCompatActivity {
         mhotelName = etHotelName.getText().toString().trim();
         mhotelRating= etRating.getText().toString().trim();
         mhotelPricePerHour= etPrice.getText().toString().trim();
-       /* email= .getText().toString().trim();
-        phone= .getText().toString().trim();
-        mapUrl= .getText().toString().trim();
-        webUrl= .getText().toString().trim();*/
+        email= etEmail.getText().toString().trim();
+        phone= etPhone.getText().toString().trim();
+        mapUrl= etMapUrl.getText().toString().trim();
+        webUrl= etWeb.getText().toString().trim();
         mhotelTagList=etTagList.getText().toString().trim();
 
         checkFields();
@@ -293,6 +300,7 @@ public class AddHotelActivity extends AppCompatActivity {
                     etTagList.setError("Tag List of The hotel is required.");
                 } else if (etPrice.getText().toString().isEmpty()) {
                     etPrice.setError("Price per Hour of The hotel is required.");
+
                 } else {
 
                     if (mUploadTask != null && mUploadTask.isInProgress()) {

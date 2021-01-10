@@ -151,7 +151,7 @@ public class HotelDetail extends AppCompatActivity {
         //tvHotelPhone.setText(mtvHotelPhone);
         hotelLocation.setText(mhotelLocation);
         hotelNames.setText(mhotelNames);
-        tagsList.setText(mtagsList);
+         tagsList.setText(mtagsList);
         //hotelLocation.setText(hotelLocation);
 
         Picasso.get().load(mhotelImage).placeholder(R.drawable.placeholder)
