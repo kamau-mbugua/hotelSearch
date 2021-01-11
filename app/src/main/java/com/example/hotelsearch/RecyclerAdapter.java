@@ -56,6 +56,13 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
         holder.hotelName.setText("Hotel Name :" + currentHotel.getHotelName());
         holder.ratings.setText("Ratings :" + currentHotel.getHotelRating());
         holder.tagsList.setText("TagList :" + currentHotel.getHotelListTag());
+        holder.tvPrice.setText("Price per Day: Ksh."+" "+currentHotel.getHotelPricePerHour());
+        holder.tvMapUrl.setText(currentHotel.getMapUrl());
+        holder.tvPhone.setText(currentHotel.getPhone());
+        holder.tvemail.setText(currentHotel.getEmail());
+        holder.tvwebsite.setText(currentHotel.getWebsiteUrl());
+
+
         Picasso.get()
                 .load(currentHotel.getImageUri())
                 .placeholder(R.drawable.placeholder)
@@ -73,6 +80,11 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
                 passIntent.putExtra("hotelRating", currentHotel.getHotelRating());
                 passIntent.putExtra("hotelListTag", currentHotel.getHotelListTag());
                 passIntent.putExtra("imageUri", currentHotel.getImageUri());
+                passIntent.putExtra("email", currentHotel.getImageUri());
+                passIntent.putExtra("phone", currentHotel.getImageUri());
+                passIntent.putExtra("mapUrl", currentHotel.getImageUri());
+                passIntent.putExtra("websiteUrl", currentHotel.getImageUri());
+                passIntent.putExtra("hotelPricePerHour", currentHotel.getHotelPricePerHour());
 
 
                 mContext.startActivity(passIntent);
@@ -97,7 +109,7 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView ratings, hotelLocation, hotelName, tagsList;
+        public TextView ratings, hotelLocation, hotelName, tagsList, tvPhone, tvemail,tvwebsite,tvMapUrl,tvPrice;
         public ImageView hotelImage;
         CardView clickedLayout;
 
@@ -106,11 +118,18 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
             super(itemView);
             ratings = itemView.findViewById(R.id.ratings);
             hotelLocation = itemView.findViewById(R.id.hotelLocation);
-            hotelLocation = itemView.findViewById(R.id.hotelLocation);
             hotelName = itemView.findViewById(R.id.hotelName);
             tagsList = itemView.findViewById(R.id.tagsList);
             hotelImage = itemView.findViewById(R.id.hotelImage);
             clickedLayout = itemView.findViewById(R.id.hotelCard);
+            tvMapUrl = itemView.findViewById(R.id.tvMapUrl);
+            tvPhone= itemView.findViewById(R.id.tvPhone);
+            tvemail=itemView.findViewById(R.id.tvemail);
+            tvwebsite = itemView.findViewById(R.id.tvwebsite);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
+
+
+
 
             /*itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);*/

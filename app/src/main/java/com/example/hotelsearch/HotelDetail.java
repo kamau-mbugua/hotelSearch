@@ -25,10 +25,10 @@ public class HotelDetail extends AppCompatActivity {
 
     ImageView hotelImage;
     TextView ratings,tvHotelEmail,tvHotelPhone,hotelLocation,
-    hotelNames,tagsList;
+    hotelNames,tagsList, tvHotelPrice,tvMapUrlLoaccation, tvHotelWebsite;
 
     String mratings,mtvHotelEmail,mtvHotelPhone,mhotelLocation,
-            mhotelNames,mtagsList, mhotelImage;
+            mhotelNames,mtagsList, mhotelImage, mhotelPrice, mhotelMapUrl,mhotelWebsite;
     WebView tvHotelDirection;
 
 
@@ -41,7 +41,10 @@ public class HotelDetail extends AppCompatActivity {
         tvHotelDirection = findViewById(R.id.googleMapView);
         hotelLocation = findViewById(R.id.hotelLocation);
         hotelNames = findViewById(R.id.hotelName);
-        tagsList = findViewById(R.id.tagsList);
+        tagsList = findViewById(R.id.tvHotelTagList);
+        tvHotelPrice = findViewById(R.id.tvHotelPrice);
+        tvMapUrlLoaccation = findViewById(R.id.tvMapUrlLoaccation);
+        tvHotelWebsite = findViewById(R.id.tvHotelWebsite);
     }
 
     @Override
@@ -65,27 +68,6 @@ public class HotelDetail extends AppCompatActivity {
 
             }
         });
-
-        //RECEIVE DATA FROM ITEMSACTIVITY VIA INTENT
-       /* Intent i=this.getIntent();
-        String hotelName=i.getExtras().getString("NAME_KEY");
-        String hotelLocations=i.getExtras().getString("LOCATION_KEY");
-        String rating = i.getExtras().getString("RATINGS_KEY");
-        String taglist = i.getExtras().getString("TAG_LIST_KEY");
-        String imageURL=i.getExtras().getString("IMAGE_KEY");
-
-
-        //SET RECEIVED DATA TO TEXTVIEWS AND IMAGEVIEWS
-        hotelNames.setText( hotelLocations);
-        hotelLocation.setText(hotelName);
-        ratings.setText(taglist);
-        tagsList.setText(rating);
-        Picasso.get()
-                .load(imageURL)
-                .placeholder(R.drawable.placeholder)
-                .fit()
-                .centerCrop()
-                .into(hotelImage);*/
 
     }
 
@@ -129,29 +111,37 @@ public class HotelDetail extends AppCompatActivity {
 
 
     private void recieveIntents() {
-        if (getIntent().hasExtra("hotelName") && getIntent().hasExtra("hotelLocation") /*&& getIntent().hasExtra("mail")*/
-                && getIntent().hasExtra("imageUri") /*&& getIntent().hasExtra("phone")*/ && getIntent().hasExtra("hotelRating")&& getIntent().hasExtra("hotelListTag")) {
+        if (getIntent().hasExtra("hotelLocation") && getIntent().hasExtra("hotelName") && getIntent().hasExtra("hotelRating")
+                && getIntent().hasExtra("hotelListTag") && getIntent().hasExtra("imageUri") && getIntent().hasExtra("email")
+                && getIntent().hasExtra("phone")  && getIntent().hasExtra("mapUrl") && getIntent().hasExtra("websiteUrl")
+                && getIntent().hasExtra("hotelPricePerHour")) {
 
             mhotelLocation = getIntent().getStringExtra("hotelLocation");
             mhotelNames = getIntent().getStringExtra("hotelName");
-            //mtvHotelEmail = getIntent().getStringExtra("mail");
-            mhotelImage = getIntent().getStringExtra("imageUri");
-           // mtvHotelPhone = getIntent().getStringExtra("phone");
-            mtagsList = getIntent().getStringExtra("hotelListTag");
-            mratings = getIntent().getStringExtra("hotelRating");
+            mtvHotelEmail = getIntent().getStringExtra("hotelRating");
+            mhotelImage = getIntent().getStringExtra("hotelListTag");
+            mtvHotelPhone = getIntent().getStringExtra("imageUri");
+            mtagsList = getIntent().getStringExtra("email");
+            mratings = getIntent().getStringExtra("phone");
+            mhotelPrice = getIntent().getStringExtra("mapUrl");
+            mhotelMapUrl = getIntent().getStringExtra("websiteUrl");
+            mhotelWebsite = getIntent().getStringExtra("hotelPricePerHour");
 
-            provision(mratings,mtvHotelEmail,mtvHotelPhone,mhotelLocation,
-                    mhotelNames,mtagsList, mhotelImage);
+            provision(mhotelLocation,mhotelNames,mtvHotelEmail,mhotelImage,
+                    mtvHotelPhone,mtagsList, mratings, mhotelPrice,  mhotelMapUrl,mhotelWebsite);
         }
     }
 
-    private void provision(String mratings, String mtvHotelEmail, String mtvHotelPhone, String mhotelLocation, String mhotelNames, String mtagsList, String mhotelImage) {
-        ratings.setText(mratings);
-        //tvHotelEmail.setText(mtvHotelEmail);
-        //tvHotelPhone.setText(mtvHotelPhone);
+    private void provision(String mratings, String mtvHotelEmail, String mtvHotelPhone, String mhotelLocation, String mhotelNames, String mtagsList, String mhotelImage, String mhotelPrice, String mhotelMapUrl,String mhotelWebsite) {
         hotelLocation.setText(mhotelLocation);
         hotelNames.setText(mhotelNames);
-         tagsList.setText(mtagsList);
+        tvHotelEmail.setText(mtvHotelEmail);
+        tvHotelPhone.setText(mtvHotelPhone);
+        tagsList.setText(mtagsList);
+        ratings.setText(mratings);
+        tvHotelPrice.setText(mhotelPrice);
+        tvMapUrlLoaccation.setText(mhotelMapUrl);
+        tvHotelWebsite.setText(mhotelWebsite);
         //hotelLocation.setText(hotelLocation);
 
         Picasso.get().load(mhotelImage).placeholder(R.drawable.placeholder)

@@ -354,7 +354,37 @@
                         android:textColor="#0C0C0C" />
 
                     <TextView
-                        android:id="@+id/tv_detailWorkLocation"
+                        android:id="@+id/tvHotelTagList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="60"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="TextView"
+                        android:textColor="#0C0C0C" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/priceLyout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="40"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="Price : "
+                        android:textColor="#0C0C0C" />
+
+                    <TextView
+                        android:id="@+id/tvHotelPrice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -458,6 +488,84 @@
 
                         <TextView
                             android:id="@+id/tvHotelEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:text="TextView"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/webCard"
+                    android:background="#ededed"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/mailCard"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/ic_baseline_location_on_24"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_baseline_location_on_24"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvMapUrlLoaccation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="TextView"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/mapCard"
+                    android:background="#ededed"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/webCard"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:id="@+id/ic_baseline_cloud_24"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_baseline_cloud_24"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvHotelWebsite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
