@@ -59,31 +59,53 @@
             android:orientation="horizontal"
             android:padding="12dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/hotelLocation"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/hotelBookButton"
-                android:gravity="center"
-                android:text="Hotel Location" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/hotelnameLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/hotelName"
+                    android:layout_width="wrap_content"
+                    android:text="Hotel Name"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal" />
 
-            <TextView
-                android:id="@+id/hotelName"
-                android:layout_width="wrap_content"
-                android:text="Hotel Name"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal" />
+                android:gravity="right"
+                android:layout_below="@+id/hotelnameLayout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hotelLocation"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/hotelBookButton"
+                    android:gravity="center"
+                    android:text="Hotel Location" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/hotelBookButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Book" />
+
+            </LinearLayout>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/hotelBookButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="Book" />
+
+
+
+
+
 
         </RelativeLayout>
         <RelativeLayout
