@@ -20,6 +20,7 @@ import android.net.UrlQuerySanitizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -206,12 +207,12 @@ public class AddHotelActivity extends AppCompatActivity {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddHotelActivity.this, "Fail...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddHotelActivity.this, "Failed to Upload...", Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(AddHotelActivity.this, "Success...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddHotelActivity.this, "Successfully Uploaded...", Toast.LENGTH_LONG).show();
 
                     if (taskSnapshot.getMetadata() != null)
                         if (taskSnapshot.getMetadata().getReference() != null) {
@@ -239,11 +240,15 @@ public class AddHotelActivity extends AppCompatActivity {
 
                                     Toast.makeText(AddHotelActivity.this, "Success Key retention...", Toast.LENGTH_LONG).show();
                                     mProgress.setVisibility(View.INVISIBLE);
-                                    backToProfile(mhotelLocation, mhotelName, mhotelRating, mhotelTagList, mhotelPricePerHour, sImage);
+                                    backToProfile(mhotelLocation, mhotelName, mhotelRating,mhotelPricePerHour,email,phone,mapUrl,webUrl, mhotelTagList, sImage);
                                     etHotelName.setText("");
                                     etLocation.setText("");
                                     etPrice.setText("");
                                     etTagList.setText("");
+                                    etEmail.setText("");
+                                    etPhone.setText("");
+                                    etMapUrl.setText("");
+                                    etWeb.setText("");
                                     Picasso.get().load("null").placeholder(R.drawable.placeholder).into(hotelImage);
                                 }
                             });
@@ -268,9 +273,37 @@ public class AddHotelActivity extends AppCompatActivity {
 
     }
 
-    private void backToProfile(String mhotelLocation, String mhotelName, String mhotelRating, String mhotelTagList, String mhotelPricePerHour, String sImage) {
+    private void backToProfile(String mhotelLocation, String mhotelName, String mhotelRating, String mhotelPricePerHour, String email, String phone, String mapUrl, String webUrl, String mhotelTagList, String sImage) {
 
+        Intent backIntent = new Intent(this, ProfileActivity.class);
+        backIntent.putExtra("hotelLocation1",mhotelLocation );
+        backIntent.putExtra("hotelName1",mhotelName );
+        backIntent.putExtra("hotelRating1",mhotelRating );
+        backIntent.putExtra("hotelListTag1",mhotelTagList );
+        backIntent.putExtra("imageUri1",sImage);
+        backIntent.putExtra("email1", email);
+        backIntent.putExtra("phone1", phone);
+        backIntent.putExtra("mapUrl1",mapUrl );
+        backIntent.putExtra("websiteUrl1", webUrl);
+        backIntent.putExtra("hotelPricePerHour1", mhotelPricePerHour);
+
+        startActivity(backIntent);
     }
+
+    /*private void backToProfile(String location, String name, String rating, String pricePerHour, String mhotelLocation, String mhotelName, String mhotelRating, String mhotelTagList, String mhotelPricePerHour, String sImage) {
+
+        Intent passIntent = new Intent(this, ProfileActivity.class);
+        passIntent.putExtra("hotelLocation1",location );
+        passIntent.putExtra("hotelName1",name );
+        passIntent.putExtra("hotelRating1",rating );
+        passIntent.putExtra("hotelListTag1",mhotelRating );
+        passIntent.putExtra("imageUri1",);
+        passIntent.putExtra("email1", );
+        passIntent.putExtra("phone1", );
+        passIntent.putExtra("mapUrl1", );
+        passIntent.putExtra("websiteUrl1", );
+        passIntent.putExtra("hotelPricePerHour1", );
+    }*/
 
 
     private void receiveEntries() {

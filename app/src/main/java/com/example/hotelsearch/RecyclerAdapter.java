@@ -75,16 +75,16 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
             @Override
             public void onClick(View v) {
                 Intent passIntent = new Intent(mContext, HotelDetail.class);
-                passIntent.putExtra("hotelLocation", currentHotel.getHotelLocation());
-                passIntent.putExtra("hotelName", currentHotel.getHotelName());
-                passIntent.putExtra("hotelRating", currentHotel.getHotelRating());
-                passIntent.putExtra("hotelListTag", currentHotel.getHotelListTag());
-                passIntent.putExtra("imageUri", currentHotel.getImageUri());
-                passIntent.putExtra("email", currentHotel.getImageUri());
-                passIntent.putExtra("phone", currentHotel.getImageUri());
-                passIntent.putExtra("mapUrl", currentHotel.getImageUri());
-                passIntent.putExtra("websiteUrl", currentHotel.getImageUri());
-                passIntent.putExtra("hotelPricePerHour", currentHotel.getHotelPricePerHour());
+                passIntent.putExtra("hotelLocation1", currentHotel.getHotelLocation());
+                passIntent.putExtra("hotelName1", currentHotel.getHotelName());
+                passIntent.putExtra("hotelRating1", currentHotel.getHotelRating());
+                passIntent.putExtra("hotelListTag1", currentHotel.getHotelListTag());
+                passIntent.putExtra("imageUri1", currentHotel.getImageUri());
+                passIntent.putExtra("email1", currentHotel.getImageUri());
+                passIntent.putExtra("phone1", currentHotel.getImageUri());
+                passIntent.putExtra("mapUrl1", currentHotel.getImageUri());
+                passIntent.putExtra("websiteUrl1", currentHotel.getImageUri());
+                passIntent.putExtra("hotelPricePerHour1", currentHotel.getHotelPricePerHour());
 
 
                 mContext.startActivity(passIntent);

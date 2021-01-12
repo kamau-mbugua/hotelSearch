@@ -153,11 +153,10 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:visibility="invisible"
+            android:orientation="vertical"
             android:padding="12dp">
 
             <TextView
@@ -167,21 +166,22 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/tvMapUrl"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:text="Hotel phone" />
 
             <TextView
                 android:id="@+id/tvemail"
                 android:layout_width="wrap_content"
                 android:text="Hotel email"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal" />
+                android:orientation="vertical" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:id="@+id/tvwebsite"
+                android:layout_gravity="center"
                 android:text="Hotel website"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tvemail"/>
@@ -190,11 +190,12 @@
             <TextView
                 android:id="@+id/tvMapUrl"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="Map Url" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
