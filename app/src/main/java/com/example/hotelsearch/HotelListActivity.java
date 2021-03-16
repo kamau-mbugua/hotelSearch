@@ -43,15 +43,7 @@ public class HotelListActivity extends AppCompatActivity {
     ProgressBar circleP_bar;
     TextView defaultView;
 
-    /*private void openDetailActivity(String[] data){
-        Intent intent = new Intent(this, HotelDetail.class);
-        intent.putExtra("NAME_KEY",data[0]);
-        intent.putExtra("LOCATION_KEY",data[1]);
-        intent.putExtra("RATINGS_KEY",data[2]);
-        intent.putExtra("TAG_LIST_KEY",data[3]);
-        intent.putExtra("IMAGE_KEY",data[4]);
-        startActivity(intent);
-    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
