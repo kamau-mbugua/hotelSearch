@@ -4,12 +4,12 @@
     android:id="@+id/hotelCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="6dp"
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:clipToPadding="false"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="6dp"
-    android:layout_margin="6dp"
     app:cardElevation="4dp">
 
 
@@ -19,7 +19,6 @@
         android:orientation="vertical">
 
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -27,9 +26,9 @@
             <ImageView
                 android:id="@+id/hotelImage"
                 android:layout_width="match_parent"
+                android:layout_height="130dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/placeholder"
-                android:layout_height="130dp" />
+                android:src="@drawable/placeholder" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,10 +37,10 @@
                 android:background="@drawable/horizontal_line" />
 
             <TextView
+                android:id="@+id/ratings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:id="@+id/ratings"
                 android:background="@drawable/rounded_linear_layout"
                 android:drawableRight="@drawable/ic_baseline_star_half_24"
                 android:drawableTint="@android:color/white"
@@ -49,7 +48,7 @@
                 android:padding="5dp"
                 android:text="4.5"
                 android:textColor="@android:color/white"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
@@ -60,31 +59,33 @@
             android:padding="12dp">
 
             <LinearLayout
+                android:id="@+id/hotelnameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/hotelnameLayout"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/hotelName"
                     android:layout_width="wrap_content"
-                    android:text="Hotel Name"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:orientation="horizontal" />
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:text="Hotel Name" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_below="@+id/hotelnameLayout"
+                android:gravity="right"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/hotelLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/hotelLocation"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@id/hotelBookButton"
@@ -96,59 +97,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Book" />
+                    android:backgroundTint="#4bb6ef"
+                    android:text="Book"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
-
-
-
-
-
-
-
-
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             android:padding="12dp">
 
-
-
-
-
             <TextView
+                android:id="@+id/tagsList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tagsList"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:text="Hotel Tag List" />
 
 
-
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             android:padding="12dp">
 
 
-
             <TextView
+                android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvPrice"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:text="Hotel Price" />
-
 
 
         </RelativeLayout>
@@ -157,42 +148,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="12dp">
 
             <TextView
+                android:id="@+id/tvPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvPhone"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/tvMapUrl"
-                android:layout_gravity="center"
                 android:text="Hotel phone" />
 
             <TextView
                 android:id="@+id/tvemail"
                 android:layout_width="wrap_content"
-                android:text="Hotel email"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:orientation="vertical" />
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="Hotel email" />
+
             <TextView
+                android:id="@+id/tvwebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvwebsite"
-                android:layout_gravity="center"
-                android:text="Hotel website"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tvemail"/>
+                android:layout_gravity="center"
+                android:layout_toRightOf="@id/tvemail"
+                android:text="Hotel website" />
 
 
             <TextView
                 android:id="@+id/tvMapUrl"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_gravity="center"
                 android:text="Map Url" />
 
         </LinearLayout>

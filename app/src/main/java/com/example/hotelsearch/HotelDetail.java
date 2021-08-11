@@ -38,7 +38,7 @@ public class HotelDetail extends AppCompatActivity {
         tvratings           = findViewById(R.id.tvHotelRatings);
         tvHotelEmail        = findViewById(R.id.tvHotelEmail);
         tvHotelPhone        = findViewById(R.id.tvHotelPhone);
-        tvHotelDirection    = findViewById(R.id.googleMapView);
+        //tvHotelDirection    = findViewById(R.id.googleMapView);
         tvhotelLocation     = findViewById(R.id.tvHotelLocation);
         tvhotelNames        = findViewById(R.id.tvHotelName);
         tvtagsList          = findViewById(R.id.tvHotelTagList);
@@ -138,17 +138,20 @@ public class HotelDetail extends AppCompatActivity {
         }
     }
 
-    private void provision(String mhotelLocation, String mhotelNames, String mratings, String mtagsList, String mhotelImage, String mtvHotelEmail, String mtvHotelPhone, String mhotelMapUrl, String mhotelWebsite, String mhotelPrice) {
+    private void provision(String mhotelLocation, String mhotelNames, String mratings,
+                           String mtagsList, String mhotelImage,
+                           String mtvHotelEmail, String mtvHotelPhone,
+                           String mhotelMapUrl, String mhotelWebsite, String mhotelPrice) {
 
         tvratings .setText(mratings);
-        tvHotelEmail .setText("booking@hotels.com");
-        tvHotelPhone .setText("023693698");
+        tvHotelEmail .setText(mtvHotelEmail);
+        tvHotelPhone .setText(mtvHotelPhone);
         tvhotelLocation.setText(mhotelLocation); ;
         tvhotelNames .setText(mhotelNames);
         tvtagsList .setText(mtagsList);
         tvHotelPrice .setText("Ksh:"+mhotelPrice);
-        tvMapUrlLoaccation.setText("https://bit.ly/HotelGoogleMap"); ;
-        tvHotelWebsite.setText("https://bit.ly/hotelWebsite");
+        tvMapUrlLoaccation.setText(mhotelMapUrl); ;
+        tvHotelWebsite.setText(mhotelWebsite);
 
         Picasso.get().load(mhotelImage).fit().placeholder(R.drawable.placeholder).into(ivhotelImage);
         Toast.makeText(this, "Url : " + mhotelImage, Toast.LENGTH_SHORT).show();

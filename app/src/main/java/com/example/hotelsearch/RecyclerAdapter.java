@@ -80,10 +80,10 @@ public  class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recyc
                 passIntent.putExtra("hotelRating1", currentHotel.getHotelRating());
                 passIntent.putExtra("hotelListTag1", currentHotel.getHotelListTag());
                 passIntent.putExtra("imageUri1", currentHotel.getImageUri());
-                passIntent.putExtra("email1", currentHotel.getImageUri());
-                passIntent.putExtra("phone1", currentHotel.getImageUri());
-                passIntent.putExtra("mapUrl1", currentHotel.getImageUri());
-                passIntent.putExtra("websiteUrl1", currentHotel.getImageUri());
+                passIntent.putExtra("email1", currentHotel.getEmail());
+                passIntent.putExtra("phone1", currentHotel.getPhone());
+                passIntent.putExtra("mapUrl1", currentHotel.getMapUrl());
+                passIntent.putExtra("websiteUrl1", currentHotel.getWebsiteUrl());
                 passIntent.putExtra("hotelPricePerHour1", currentHotel.getHotelPricePerHour());
 
 

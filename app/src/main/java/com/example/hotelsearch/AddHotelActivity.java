@@ -3,6 +3,7 @@ package com.example.hotelsearch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -31,6 +32,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hotelsearch.databinding.ActivityAddHotelBinding;
+import com.example.hotelsearch.databinding.ActivityForgortBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -69,7 +72,7 @@ public class AddHotelActivity extends AppCompatActivity {
 
 
     private StorageTask mUploadTask;
-    private ProgressBar mProgress;
+    private CardView mProgress;
 
     Hotel hotel;
 
@@ -82,14 +85,20 @@ public class AddHotelActivity extends AppCompatActivity {
     String etTagList1 = etTagList.getText().toString();
     String etPrice1 = etPrice.getText().toString();*/
 
+    ActivityAddHotelBinding addHotelBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
+        addHotelBinding = ActivityAddHotelBinding.inflate(getLayoutInflater());
+        View view = addHotelBinding.getRoot();
+        setContentView(view);
 
         storageReference = FirebaseStorage.getInstance().getReference("hotelProducts");
         databaseReference = FirebaseDatabase.getInstance().getReference("hotelProducts");
+
+        addHotelBinding.progressBar.setVisibility(View.GONE);
 
 //        databaseReference.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -116,7 +125,7 @@ public class AddHotelActivity extends AppCompatActivity {
         etTagList = findViewById(R.id.etTagList);
         etPrice = findViewById(R.id.etPrice);
         btnSave = findViewById(R.id.btnSave);
-        tvUpload = findViewById(R.id.tvUpload);
+        tvUpload = findViewById(R.id.tvUploadPhoto);
         mProgress = findViewById(R.id.progressBar);
         etPhone = findViewById(R.id.etphone);
         etWeb = findViewById(R.id.etweb);
@@ -156,26 +165,6 @@ public class AddHotelActivity extends AppCompatActivity {
             public void onClick(View v) {
                 receiveEntries();
 
-                /*if (etLocation.getText().toString().isEmpty()) {
-                    etLocation.setError("Location of The hotel is required.");
-                } else if (etHotelName.getText().toString().isEmpty()) {
-                    etHotelName.setError("Name of The hotel is required.");
-                } else if (etRating.getText().toString().isEmpty()) {
-                    etRating.setError("Rating of The hotel is required.");
-                } else if (etTagList.getText().toString().isEmpty()) {
-                    etTagList.setError("Tag List of The hotel is required.");
-                } else if (etPrice.getText().toString().isEmpty()) {
-                    etPrice.setError("Price per Hour of The hotel is required.");
-                } else {
-
-                    if (mUploadTask != null && mUploadTask.isInProgress()) {
-                        Toast.makeText(AddHotelActivity.this, "An Upload is Still in Progress", Toast.LENGTH_SHORT).show();
-                    } else {
-                        uploadFile();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        finish();
-                    }
-                }*/
 
             }
         });
@@ -228,7 +217,7 @@ public class AddHotelActivity extends AppCompatActivity {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            mProgress.setProgress(0);
+                                            addHotelBinding.mprogressBar.setProgress(0);
                                         }
                                     }, 500);
                                     Toast.makeText(AddHotelActivity.this, "Upload Successful..." + sImage, Toast.LENGTH_SHORT).show();
@@ -344,7 +333,7 @@ public class AddHotelActivity extends AppCompatActivity {
                             uploadFile();
 
 
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HotelListActivity.class));
                             finish();
                         }
                         else {

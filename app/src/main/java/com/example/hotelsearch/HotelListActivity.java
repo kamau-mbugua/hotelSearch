@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hotelsearch.databinding.ActivityHotelListBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,9 +43,14 @@ public class HotelListActivity extends AppCompatActivity {
     List<Hotel> filteredmHotel;
     LinearLayoutManager layoutManager;
     EditText searchText;
-    ProgressBar circleP_bar;
+    CardView circleP_bar;
     TextView defaultView;
 
+    ExtendedFloatingActionButton extended_fab;
+
+
+
+    ActivityHotelListBinding hotelListBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,7 @@ public class HotelListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerVw);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        extended_fab= findViewById(R.id.extended_fab);
 
 
         defaultView = findViewById(R.id.defaultView);
@@ -153,6 +162,14 @@ public class HotelListActivity extends AppCompatActivity {
             defaultView.setText(R.string.No_network);
             Toast.makeText(this, " Check out", Toast.LENGTH_LONG).show();
         }
+
+        extended_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return;
+            }
+        });
 
 
     }
