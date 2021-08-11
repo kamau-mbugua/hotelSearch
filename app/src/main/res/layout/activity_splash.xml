@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/antonregular"
         android:gravity="center_horizontal"
-        android:text="homes"
+        android:text="hotelsSearch"
         android:textSize="35dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/card_view_progress"
